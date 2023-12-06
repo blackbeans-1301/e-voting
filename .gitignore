@@ -26,7 +26,7 @@ yarn-debug.log*
 yarn-error.log*
 
 package-lock.json
-bun.lock
+bun.lockb
 
 # local env files
 .env*.local
