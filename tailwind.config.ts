@@ -21,6 +21,7 @@ const config: Config = {
           500: "#43b494",
           600: "#738f9b",
         },
+        "bg-primary": "#f8fafb",
       },
       aspectRatio: {
         "4/3": "4 / 3",
