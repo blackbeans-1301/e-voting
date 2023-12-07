@@ -17,10 +17,13 @@ const config: Config = {
       },
       colors: {
         primary: {
-          400: "#defcee",
+          400: "#e8f6f2",
           500: "#43b494",
           600: "#738f9b",
         },
+      },
+      aspectRatio: {
+        "4/3": "4 / 3",
       },
     },
   },
