@@ -1,14 +1,14 @@
 import { Poll } from "@/lib/package/entities/poll.entity";
 import AppButton from "@/lib/package/global-components/AppButton";
-import usePollCard from "./hooks/PollCard.hook";
+import useAdminPollCard from "./hooks/AdminPollCard.hook";
 
 type PollCardProps = {
   poll: Poll;
 };
 
-export default function PollCard(props: PollCardProps) {
+export default function AdminPollCard(props: PollCardProps) {
   const { poll } = props;
-  const { onButtonClicked } = usePollCard({ poll });
+  const { onButtonClicked } = useAdminPollCard({ poll });
 
   return (
     <div

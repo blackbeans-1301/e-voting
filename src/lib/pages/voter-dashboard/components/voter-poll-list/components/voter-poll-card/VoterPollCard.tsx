@@ -1,14 +1,14 @@
 import { Poll } from "@/lib/package/entities/poll.entity";
 import AppButton from "@/lib/package/global-components/AppButton";
-import usePollCard from "./hooks/PollCard.hook";
+import useVoterPollCard from "./hooks/VoterPollCard.hook";
 
 type PollCardProps = {
   poll: Poll;
 };
 
-export default function PollCard(props: PollCardProps) {
+export default function VoterPollCard(props: PollCardProps) {
   const { poll } = props;
-  const { onButtonClicked } = usePollCard({ poll });
+  const { onButtonClicked } = useVoterPollCard({ poll });
 
   return (
     <div
@@ -79,10 +79,10 @@ export default function PollCard(props: PollCardProps) {
           <AppButton
             title={
               poll.status === "ready"
-                ? "Start Poll"
+                ? "Waiting to Open"
                 : poll.status === "closed"
-                ? "View Result"
-                : "Close Poll"
+                ? "View Results"
+                : "Start Vote"
             }
             handler={onButtonClicked}
           />

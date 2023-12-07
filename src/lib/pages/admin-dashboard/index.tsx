@@ -1,5 +1,5 @@
 import AppButton from "@/lib/package/global-components/AppButton";
-import PollList from "./components/project-list/PollList";
+import AdminPollList from "./components/admin-poll-list/AdminPollList";
 
 export default function AdminDashboardPage() {
   return (
@@ -12,7 +12,7 @@ export default function AdminDashboardPage() {
         <div></div>
       </div>
 
-      <PollList />
+      <AdminPollList />
     </div>
   );
 }

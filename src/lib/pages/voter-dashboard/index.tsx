@@ -1,4 +1,4 @@
-import PollList from "./components/project-list/PollList";
+import VoterPollList from "./components/voter-poll-list/VoterPollList";
 
 export default function VoterDashboardPage() {
   return (
@@ -9,7 +9,7 @@ export default function VoterDashboardPage() {
         <div></div>
       </div>
 
-      <PollList />
+      <VoterPollList />
     </div>
   );
 }
