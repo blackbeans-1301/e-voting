@@ -1,13 +1,14 @@
-import { BallotWithResult, Poll } from "@/lib/package/entities/poll.entity";
+import { BallotWithResult } from "@/lib/package/entities/poll.entity";
 import { BarChart } from "@mui/x-charts";
 import useViewPollResult from "./hooks/ViewPollResult.hook";
 
 type ViewPollResultProps = {
-  poll: Poll;
+  pollId: string;
+  pollName: string;
 };
 
 export default function ViewPollResult(props: ViewPollResultProps) {
-  const { poll } = props;
+  const { pollName, pollId } = props;
   const pollResultData: BallotWithResult[] = [
     {
       id: "1",
@@ -81,7 +82,7 @@ export default function ViewPollResult(props: ViewPollResultProps) {
           ]}
           height={700}
         />
-        <div className="text-center text-2xl">{poll.name} votes result</div>
+        <div className="text-center text-2xl">{pollName} votes result</div>
       </div>
     </div>
   );

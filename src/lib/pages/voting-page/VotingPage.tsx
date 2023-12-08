@@ -39,7 +39,9 @@ export default function VotingPage(props: VotingPageProps) {
         {pollData.status === "open" && (
           <UserVote pollId={pollData.id} ballots={pollData.ballots} />
         )}
-        {pollData.status === "closed" && <ViewPollResult poll={pollData} />}
+        {pollData.status === "closed" && (
+          <ViewPollResult pollId={pollData.id} pollName={pollData.name} />
+        )}
         {pollData.status === "ready" && (
           <div className="w-full h-full">
             <div className="w-full text-xl text-center text-red-700">
