@@ -22,9 +22,13 @@ const config: Config = {
           600: "#738f9b",
         },
         "bg-primary": "#f8fafb",
+        "table-main": "#edf3f5",
       },
       aspectRatio: {
         "4/3": "4 / 3",
+      },
+      borderWidth: {
+        DEFAULT: "1px",
       },
     },
   },
