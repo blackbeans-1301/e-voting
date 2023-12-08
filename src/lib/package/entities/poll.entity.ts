@@ -13,3 +13,7 @@ export interface Ballot {
   id: string;
   name: string;
 }
+
+export interface BallotWithResult extends Ballot {
+  numberOfVotes: number;
+}
