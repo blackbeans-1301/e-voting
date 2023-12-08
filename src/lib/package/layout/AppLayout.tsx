@@ -8,6 +8,7 @@ type AppLayoutProps = {
 
 export default function AppLayout(props: AppLayoutProps) {
   const { children } = props;
+
   return (
     <div className="w-full h-full">
       {/* header */}
