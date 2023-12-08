@@ -1,7 +1,9 @@
+import AppLayout from "@/lib/package/layout/AppLayout";
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
-import AppLayout from "@/lib/package/layout/AppLayout";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
 
@@ -25,6 +27,13 @@ export default function RootLayout({
         className={`${montserrat.className} h-screen`}
         style={{ background: "#f8fafb" }}
       >
+        <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+        />
         <AppLayout>{children}</AppLayout>
       </body>
     </html>
