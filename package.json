@@ -17,7 +17,9 @@
     "@mui/material": "^5.14.20",
     "next": "14.0.3",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "big-integer": "^1.6.51",
+    "crypto-js": "^4.2.0"
   },
   "devDependencies": {
     "typescript": "^5",

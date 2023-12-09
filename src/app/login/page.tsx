@@ -9,6 +9,9 @@ export default function Login() {
   const handleLogin = () => {
     // Add your login logic here
     console.log("Logging in...", { username, password });
+    fetch("/api").then((res) => {
+      return res.json();
+    });
   };
 
   return (
