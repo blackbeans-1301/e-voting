@@ -6,9 +6,22 @@ export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     // Add your login logic here
-    console.log("Logging in...", { username, password });
+    // console.log("Logging in...", { username, password });
+    const res = await fetch('/api/login', {
+      method: "POST",
+      body: JSON.stringify({
+        name: username,
+        password: password,
+        age: 22,
+            email: "aa"
+      }),
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+    },
+    })
+    console.log( res.json());
   };
 
   return (
