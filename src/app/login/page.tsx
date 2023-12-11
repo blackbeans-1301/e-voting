@@ -1,28 +1,33 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const router = useRouter()
 
   const handleLogin = async () => {
     // Add your login logic here
     // console.log("Logging in...", { username, password });
-    const res = await fetch('/api/login', {
-      method: "POST",
-      body: JSON.stringify({
-        name: username,
-        password: password,
-        age: 22,
-            email: "aa"
-      }),
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-    },
-    })
-    console.log( res.json());
-  };
+    try {
+      const res = await fetch('/api/login', {
+        method: "POST",
+        body: JSON.stringify({
+          email: username,
+          password: password,
+        }),
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+      },
+      })
+      console.log( res.json());
+      router.push('/voter-dashboard');
+    } catch (err) {
+      console.log(err)
+    }
+  }
 
   return (
     <div className="flex items-center justify-center h-screen">
