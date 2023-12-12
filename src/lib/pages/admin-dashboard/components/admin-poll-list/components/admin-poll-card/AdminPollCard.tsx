@@ -27,18 +27,17 @@ export default function AdminPollCard(props: PollCardProps) {
               status:&nbsp;
               <span
                 className={`font-semibold border-2 ${
-                  poll.status === "open"
+                  poll.isActived &&
+                  poll.isActived
                     ? "border-blue-600"
-                    : poll.status === "closed"
-                    ? "border-yellow-600"
-                    : "border-green-600"
+                    : "border-yellow-600"
                 } py-0.5 px-1 rounded-md`}
               >
-                {poll.status}
+                {poll.isActived ? "Open" : "Closed"}
               </span>{" "}
             </div>
 
-            <div>
+            {/* <div>
               voters:{" "}
               <span className="font-semibold">{poll.voters.length}</span>
             </div>
@@ -46,7 +45,7 @@ export default function AdminPollCard(props: PollCardProps) {
             <div>
               Ballots:{" "}
               <span className="font-semibold">{poll.ballots.length}</span>
-            </div>
+            </div> */}
           </div>
 
           <div className="pt-5">
@@ -54,21 +53,21 @@ export default function AdminPollCard(props: PollCardProps) {
               <div>
                 <span className="font-semibold">Start:&nbsp;</span>
                 <span className="">
-                  {new Date(poll.startTime).toLocaleString()}
+                  {poll.startDate && new Date(poll.startDate).toLocaleString()}
                 </span>
               </div>
 
               <div className="mt-1">
                 <span className="font-semibold">End:&nbsp;</span>
                 <span className="">
-                  {new Date(poll.endTime).toLocaleString()}
+                  {poll.endDate && new Date(poll.endDate).toLocaleString()}
                 </span>
               </div>
 
               <div className="mt-2">
                 <span className="font-semibold">Created At:&nbsp;</span>
                 <span className="">
-                  {new Date(poll.endTime).toLocaleString()}
+                  {new Date(poll.createdAt).toLocaleString()}
                 </span>
               </div>
             </div>
@@ -78,11 +77,10 @@ export default function AdminPollCard(props: PollCardProps) {
         <div className="h-18 ">
           <AppButton
             title={
-              poll.status === "ready"
-                ? "Start Poll"
-                : poll.status === "closed"
-                ? "View Result"
-                : "Close Poll"
+              poll.isActived &&
+              poll.isActived
+                ? "Start Vote"
+                : "View Results"
             }
             handler={onButtonClicked}
           />
