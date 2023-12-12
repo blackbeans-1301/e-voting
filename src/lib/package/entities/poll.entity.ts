@@ -7,6 +7,9 @@ export interface Poll {
   startTime: Date;
   endTime: Date;
   createdAt: Date;
+  startDate?: Date;
+  endDate?: Date;
+  isActived?: boolean;
 }
 
 export interface Ballot {
