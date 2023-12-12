@@ -79,7 +79,7 @@ export default function VoterPollCard(props: PollCardProps) {
           <AppButton
             title={
               poll.isActived &&
-              poll.status
+              poll.isActived
                 ? "Start Vote"
                 : "View Results"
             }
