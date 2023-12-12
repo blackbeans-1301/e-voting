@@ -2,33 +2,35 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Login() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const router = useRouter()
+  const router = useRouter();
+
+  useEffect(() => {
+    if (localStorage.getItem("voter")) {
+      router.push("/voter-dashboard");
+    }
+  }, []);
 
   const handleLogin = async () => {
-    // Add your login logic here
-    // console.log("Logging in...", { username, password });
     try {
-      const res = await fetch('/api/login', {
+      const res = await fetch("/api/login", {
         method: "POST",
         body: JSON.stringify({
-          email: username,
+          email: email,
           password: password,
         }),
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded"
-      },
-      })
-      console.log( res.json());
-      router.push('/voter-dashboard');
+      });
+      const data: { voterId: number; name: string } = await res.json();
+      localStorage.setItem("voter", JSON.stringify(data));
+      router.push("/voter-dashboard");
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
+  };
 
   return (
     <div className="flex items-center justify-center h-screen">
@@ -36,15 +38,15 @@ export default function Login() {
         <h1 className="text-2xl font-bold mb-4">Login</h1>
         <form>
           <div className="mb-4">
-            <label htmlFor="username" className="block text-gray-600">
-              Username
+            <label htmlFor="email" className="block text-gray-600">
+              Email
             </label>
             <input
-              type="text"
-              id="username"
+              type="email"
+              id="email"
               className="w-full border p-2 rounded-md"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div className="mb-4">
