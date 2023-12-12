@@ -9,6 +9,7 @@ type PollCardProps = {
 export default function VoterPollCard(props: PollCardProps) {
   const { poll } = props;
   const { onButtonClicked } = useVoterPollCard({ poll });
+  console.log("polls, ", poll)
 
   return (
     <div
@@ -38,7 +39,7 @@ export default function VoterPollCard(props: PollCardProps) {
               </span>{" "}
             </div>
 
-            <div>
+            {/* <div>
               voters:{" "}
               <span className="font-semibold">{poll.voters.length}</span>
             </div>
@@ -46,7 +47,7 @@ export default function VoterPollCard(props: PollCardProps) {
             <div>
               Ballots:{" "}
               <span className="font-semibold">{poll.ballots.length}</span>
-            </div>
+            </div> */}
           </div>
 
           <div className="pt-5">
