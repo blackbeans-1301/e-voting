@@ -27,6 +27,13 @@ export default function CreatePollPage() {
     setInvitationLink,
   } = useCreatePollPage();
 
+  const createElectionHandler = () => {
+    console.log("start poll");
+    console.log(pollName)
+    console.log(votingTime)
+    console.log(voters)
+  }
+
   return (
     <div className="w-full h-full bg-bg-primary">
       <div className="px-4 py-4">
@@ -96,7 +103,7 @@ export default function CreatePollPage() {
         <AppButton
           title="Start Poll"
           handler={() => {
-            console.log("start poll");
+            createElectionHandler()
           }}
         />
       </div>
