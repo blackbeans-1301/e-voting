@@ -1,5 +1,5 @@
-const BigInt = require("big-integer");
-const SHA512 = require("crypto-js/sha512");
+import BigInt from "big-integer";
+import SHA512 from "crypto-js/sha512";
 
 export function generatePrime() {
   var p;
@@ -443,6 +443,7 @@ export function openVote(votes, serverFullKey) {
   let result = solve(decryptS, Ms, votes, serverFullKey);
   return result;
 }
+
 // set up
 // const a = BigInt("20");
 // const b = BigInt("35");
