@@ -24,6 +24,7 @@ export default function Login() {
           password: password,
         }),
       });
+
       const data: { voterId: number; name: string } = await res.json();
       localStorage.setItem("voter", JSON.stringify(data));
       router.push("/voter-dashboard");
