@@ -31,8 +31,9 @@ export interface CandidateWithResult extends Candidate {
   numberOfVote: number;
 }
 
-export interface CandidateWithResult extends Candidate {
-  numberOfVote: number;
+export interface BallotFullResult {
+  election?: Election
+  candidates: CandidateWithResult[]
 }
 
 export interface BallotInfo {

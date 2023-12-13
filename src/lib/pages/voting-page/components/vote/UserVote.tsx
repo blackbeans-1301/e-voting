@@ -1,4 +1,4 @@
-import { Ballot } from "@/lib/package/entities/poll.entity";
+import { Candidate } from "@/lib/package/entities/poll.entity";
 import AppButton from "@/lib/package/global-components/AppButton";
 import { toast } from "react-toastify";
 import BallotItem from "./components/ballot-item/BallotItem";
@@ -6,7 +6,7 @@ import useUserVote from "./hooks/UserVote.hook";
 
 type UserVoteProps = {
   pollId: string;
-  ballots: Ballot[];
+  ballots: Candidate[];
 };
 
 export default function UserVote(props: UserVoteProps) {
