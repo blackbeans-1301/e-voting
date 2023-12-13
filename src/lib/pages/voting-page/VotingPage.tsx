@@ -1,3 +1,6 @@
+import { BallotInfo } from "@/lib/package/entities/poll.entity";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import ViewPollResult from "./components/view-result/ViewPollResult";
 import UserVote from "./components/vote/UserVote";
 
@@ -6,52 +9,51 @@ type VotingPageProps = {
 };
 
 export default function VotingPage(props: VotingPageProps) {
-  const pollData = {
-    id: "1",
-    name: "poll 1",
-    ballots: [
-      { id: "1-1", name: "Huy Le" },
-      { id: "1-2", name: "Do Lap" },
-      { id: "1-3", name: "Lam Vu" },
-      { id: "1-4", name: "Hoang Duong" },
-      { id: "1-5", name: "Duc Tran" },
-    ],
-    voters: [
-      "20020202@vnu.edu.vn",
-      "20020198@vnu.edu.vn",
-      "example@gmail.com",
-      "only.fans@gmail.com",
-      "voter@gmail.com",
-    ],
-    status: "closed",
-    startTime: new Date(),
-    endTime: new Date(),
-    createdAt: new Date(),
+  const [loading, setLoading] = useState(false);
+  const [ pollInfo, setPollInfo] = useState<BallotInfo>();
+  const router = useRouter();
+
+  useEffect(() => {
+    getPollInfo()
+  }, [])
+
+  const getPollInfo = async () => {
+    try {
+      setLoading(true);
+      const voter = localStorage.getItem("voter");
+      if (!voter) router.push("/login");
+      else {
+        await fetch(`/api/election-info/${props.pollId}`)
+          .then((res) => res.json())
+          .then((res) => {
+            console.log(res);
+            setPollInfo(res);
+            setLoading(false);
+          });
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
-    <div className="w-full h-full">
-      <div className="w-full h-full pt-4">
-        <div className="w-full text-3xl font-semibold text-gray-700 text-center pb-4">
-          {pollData.name}
-        </div>
-
-        {pollData.status === "open" && (
-          <UserVote pollId={pollData.id} ballots={pollData.ballots} />
-        )}
-        {pollData.status === "closed" && (
-          <ViewPollResult pollId={pollData.id} pollName={pollData.name} />
-        )}
-        {pollData.status === "ready" && (
-          <div className="w-full h-full">
-            <div className="w-full text-xl text-center text-red-700">
-              This poll is currently not Open!
+    <>
+      {loading ? <p>Loading...</p> :
+        <div className="w-full h-full">
+          <div className="w-full h-full pt-4">
+            <div className="w-full text-3xl font-semibold text-gray-700 text-center pb-4">
+              {pollInfo ? pollInfo.election.name : ""}
             </div>
-          </div>
-        )}
 
-        <div></div>
-      </div>
-    </div>
+            {(pollInfo && pollInfo.election.isActived === true) && (
+              <UserVote pollId={pollInfo.election.id} ballots={pollInfo.candidates} />
+            )}
+            {(pollInfo && pollInfo.election.isActived === true) && (
+              <ViewPollResult pollId={pollInfo.election.id} pollName={pollInfo.election.name} />
+            )}
+          </div>
+        </div>
+      }
+    </>
   );
 }
