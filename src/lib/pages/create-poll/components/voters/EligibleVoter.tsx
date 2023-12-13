@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import useEligibleVoter from "./EligibleVoter.hook";
 
 type EligibleVotersProps = {
@@ -15,6 +15,7 @@ export default function EligibleVoters(props: EligibleVotersProps) {
     setVoters,
   });
   const [voterInput, setVoterInput] = useState("");
+  const inputRef = useRef<HTMLElement>();
 
   return (
     <div
@@ -52,7 +53,8 @@ export default function EligibleVoters(props: EligibleVotersProps) {
                   <tr>
                     <td className="border px-4 py-2">
                       <input
-                        type="text"
+                        ref={inputRef}
+                        type="email"
                         placeholder="Voter's Email"
                         value={voterInput}
                         onChange={(e) => setVoterInput(e.target.value)}
@@ -65,8 +67,10 @@ export default function EligibleVoters(props: EligibleVotersProps) {
 
               <button
                 onClick={() => {
-                  addEligibleVoter(voterInput);
-                  setVoterInput("");
+                  if (inputRef.current.checkValidity()) {
+                    addEligibleVoter(voterInput);
+                    setVoterInput("");
+                  }
                 }}
                 className="mt-4 p-2 bg-blue-500 text-white rounded-md"
               >
