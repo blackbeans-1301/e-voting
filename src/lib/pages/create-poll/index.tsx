@@ -5,6 +5,7 @@ import {
   SettingsRounded,
 } from "@mui/icons-material";
 import { Box, Tab, Tabs } from "@mui/material";
+import { useRouter } from "next/navigation";
 import Candidates from "./components/candidates/Candidates";
 import GeneralSetting from "./components/general/GeneralSetting";
 import EligibleVoters from "./components/voters/EligibleVoter";
@@ -27,11 +28,33 @@ export default function CreatePollPage() {
     setInvitationLink,
   } = useCreatePollPage();
 
-  const createElectionHandler = () => {
-    console.log("start poll");
-    console.log(pollName);
-    console.log(votingTime);
-    console.log(voters);
+  const router = useRouter();
+
+  const createElectionHandler = async () => {
+    if (!pollName || !candidates.length || !voters.length) return;
+
+    const date = new Date();
+    const endDate = new Date(date.getTime() + 30 * 60 * 1000);
+
+    const election = {
+      name: pollName,
+      startDate: date.toISOString(),
+      endDate: endDate.toISOString(),
+      candidates: candidates.map((item) => {
+        return { name: item.name };
+      }),
+      voters: voters.map((item) => ({ email: item })),
+    };
+
+    try {
+      const res = await fetch("/api/election", {
+        method: "POST",
+        body: JSON.stringify(election),
+      });
+      router.push("/admin-dashboard");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
