@@ -44,7 +44,9 @@ export default function VotingPage(props: VotingPageProps) {
             <div className="w-full text-3xl font-semibold text-gray-700 text-center pb-4">
               {pollInfo ? pollInfo.election.name : ""}
             </div>
-
+            {(pollInfo && pollInfo.election.isActived === true && pollInfo.election.isVoted === true) && (
+              <p>Bạn đã vote cho cuộc bầu cử này!</p>
+            )}
             {(pollInfo && pollInfo.election.isActived === true) && (
               <UserVote pollId={pollInfo.election.id} ballots={pollInfo.candidates} />
             )}
