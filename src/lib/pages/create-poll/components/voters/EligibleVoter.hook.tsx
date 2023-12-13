@@ -6,8 +6,8 @@ type EligibleVoterHookProps = {
 export default function useEligibleVoter(props: EligibleVoterHookProps) {
   const { voters, setVoters } = props;
 
-  const addBallot = () => {
-    setVoters([...voters, ""]);
+  const addEligibleVoter = (name: string) => {
+    setVoters([...voters, name]);
   };
 
   const handleInputChange = (index: number, value: string) => {
@@ -17,5 +17,5 @@ export default function useEligibleVoter(props: EligibleVoterHookProps) {
     setVoters([...newVoters]);
   };
 
-  return { addBallot, handleInputChange };
+  return { addEligibleVoter, handleInputChange };
 }

@@ -1,20 +1,21 @@
+import { Candidate } from "@/lib/package/entities/poll.entity";
 import React, { useState } from "react";
-import useEligibleVoter from "./EligibleVoter.hook";
+import useCandidates from "./Candidates.hook";
 
-type EligibleVotersProps = {
+type CandidatesProps = {
   value: number;
   index: number;
-  voters: string[];
-  setVoters: React.Dispatch<React.SetStateAction<string[]>>;
+  candidates: Candidate[];
+  setCandidates: React.Dispatch<React.SetStateAction<Candidate[]>>;
 };
 
-export default function EligibleVoters(props: EligibleVotersProps) {
-  const { value, index, voters, setVoters } = props;
-  const { handleInputChange, addEligibleVoter } = useEligibleVoter({
-    voters,
-    setVoters,
+export default function Candidates(props: CandidatesProps) {
+  const { value, index, candidates, setCandidates } = props;
+  const { handleInputChange, addCandidate } = useCandidates({
+    candidates,
+    setCandidates,
   });
-  const [voterInput, setVoterInput] = useState("");
+  const [candidateInput, setCandidateInput] = useState("");
 
   return (
     <div
@@ -30,17 +31,17 @@ export default function EligibleVoters(props: EligibleVotersProps) {
               <table className="table-auto">
                 <thead>
                   <tr>
-                    <th className="border px-4 py-2">Eligible Votes</th>
+                    <th className="border px-4 py-2">Candidates</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {voters.map((item, index) => (
+                  {candidates.map((item, index) => (
                     <tr key={index}>
                       <td className="border px-4 py-2">
                         <input
-                          type="email"
-                          placeholder="Voter's Email"
-                          value={item}
+                          type="text"
+                          placeholder="Candidate Name"
+                          value={item.name}
                           onChange={(e) =>
                             handleInputChange(index, e.target.value)
                           }
@@ -53,9 +54,9 @@ export default function EligibleVoters(props: EligibleVotersProps) {
                     <td className="border px-4 py-2">
                       <input
                         type="text"
-                        placeholder="Voter's Email"
-                        value={voterInput}
-                        onChange={(e) => setVoterInput(e.target.value)}
+                        placeholder="Candidate Name"
+                        value={candidateInput}
+                        onChange={(e) => setCandidateInput(e.target.value)}
                         className="w-full border p-2 rounded-md"
                       />
                     </td>
@@ -65,12 +66,12 @@ export default function EligibleVoters(props: EligibleVotersProps) {
 
               <button
                 onClick={() => {
-                  addEligibleVoter(voterInput);
-                  setVoterInput("");
+                  addCandidate(candidateInput);
+                  setCandidateInput("");
                 }}
                 className="mt-4 p-2 bg-blue-500 text-white rounded-md"
               >
-                Add Voter
+                Add Candidate
               </button>
             </div>
           </div>

@@ -1,10 +1,9 @@
 export interface Poll {
   id: string;
   name: string;
-  ballots: Ballot[];
+  candidates: Candidate[];
   voters: string[];
-  status: "ready" | "open" | "closed";
-  startTime: Date;
+  status: "open" | "closed";
   endTime: Date;
   createdAt: Date;
   startDate?: Date;
@@ -12,11 +11,11 @@ export interface Poll {
   isActived?: boolean;
 }
 
-export interface Ballot {
+export interface Candidate {
   id: string;
   name: string;
 }
 
-export interface BallotWithResult extends Ballot {
+export interface CandidateWithResult extends Candidate {
   numberOfVotes: number;
 }

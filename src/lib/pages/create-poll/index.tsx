@@ -5,7 +5,7 @@ import {
   SettingsRounded,
 } from "@mui/icons-material";
 import { Box, Tab, Tabs } from "@mui/material";
-import BallotPaper from "./components/ballots/BallotPaper";
+import Candidates from "./components/candidates/Candidates";
 import GeneralSetting from "./components/general/GeneralSetting";
 import EligibleVoters from "./components/voters/EligibleVoter";
 import useCreatePollPage from "./hooks/CreatePollPage.hook";
@@ -15,11 +15,11 @@ export default function CreatePollPage() {
     tabIndex,
     pollName,
     pollId,
-    ballotPapers,
+    candidates,
     voters,
     votingTime,
     invitationLink,
-    setBallotPapers,
+    setCandidates,
     setPollName,
     setTabIndex,
     setVoters,
@@ -29,10 +29,10 @@ export default function CreatePollPage() {
 
   const createElectionHandler = () => {
     console.log("start poll");
-    console.log(pollName)
-    console.log(votingTime)
-    console.log(voters)
-  }
+    console.log(pollName);
+    console.log(votingTime);
+    console.log(voters);
+  };
 
   return (
     <div className="w-full h-full bg-bg-primary">
@@ -63,7 +63,7 @@ export default function CreatePollPage() {
             <Tab
               icon={<ReceiptRounded />}
               iconPosition="start"
-              label="Ballots"
+              label="Candidates"
             />
             <Tab
               icon={<GroupRounded />}
@@ -78,17 +78,17 @@ export default function CreatePollPage() {
             value={tabIndex}
             index={0}
             pollName={pollName}
-            ballotPapers={[{ id: "1", name: "hello" }]}
-            voters={["200@gmail.com", "test@gmail.com"]}
+            candidates={candidates}
+            voters={voters}
             votingTime={30}
             pollId={pollId}
             invitationLink={"https://google.com"}
           />
-          <BallotPaper
+          <Candidates
             value={tabIndex}
             index={1}
-            ballots={ballotPapers}
-            setBallots={setBallotPapers}
+            candidates={candidates}
+            setCandidates={setCandidates}
           />
           <EligibleVoters
             value={tabIndex}
@@ -103,7 +103,7 @@ export default function CreatePollPage() {
         <AppButton
           title="Start Poll"
           handler={() => {
-            createElectionHandler()
+            createElectionHandler();
           }}
         />
       </div>
