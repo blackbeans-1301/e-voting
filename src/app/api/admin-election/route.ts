@@ -1,8 +1,4 @@
 export const GET = async (req: Request) => {
-    const res =  await fetch('http://localhost:6969/api/election', {
-        method: "GET",
-    })
-    // const result = await res.json()
-    return res;
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/election`);
+  return res;
 };
-  

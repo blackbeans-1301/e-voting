@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 type AppLayoutProps = {
@@ -10,6 +11,17 @@ export default function AppLayout(props: AppLayoutProps) {
   const { children } = props;
   const [navOpen, setNavOpen] = useState(false);
   const [userMenu, setUserMenu] = useState(false);
+
+  const router = useRouter();
+  const handleLogout = async () => {
+    try {
+      localStorage.removeItem("voter");
+      await fetch("/api/logout");
+      router.push("/login");
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <div className="w-full h-full">
@@ -89,6 +101,7 @@ export default function AppLayout(props: AppLayoutProps) {
                 </div>
               </div>
             </div>
+
             <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
               <div className="relative ml-3">
                 <div>
@@ -130,8 +143,9 @@ export default function AppLayout(props: AppLayoutProps) {
                       className="block px-4 py-2 text-sm text-gray-700"
                       role="menuitem"
                       id="user-menu-item-2"
+                      onClick={handleLogout}
                     >
-                      Sign out
+                      Log out
                     </a>
                   </div>
                 )}
