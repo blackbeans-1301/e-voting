@@ -11,11 +11,33 @@ export interface Poll {
   isActived?: boolean;
 }
 
+export interface Election {
+  id: string;
+  name: string;
+  startDate: Date;
+  endDate: Date;
+  isActived: boolean;
+  numberOfCandidate: number;
+  maximumOfVote: any
+}
+
 export interface Candidate {
   id: string;
   name: string;
+  electionID?: any
 }
 
 export interface CandidateWithResult extends Candidate {
-  numberOfVotes: number;
+  numberOfVote: number;
+}
+
+export interface BallotFullResult {
+  election?: Election
+  candidates: CandidateWithResult[]
+}
+
+export interface BallotInfo {
+  election: Election
+  serverPublicKey?: any
+  candidates: Candidate[]
 }
