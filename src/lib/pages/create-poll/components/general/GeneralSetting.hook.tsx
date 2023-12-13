@@ -1,8 +1,8 @@
-import { Ballot } from "@/lib/package/entities/poll.entity";
+import { Candidate } from "@/lib/package/entities/poll.entity";
 import { useEffect, useState } from "react";
 type GeneralSettingHookProps = {
   pollName: string;
-  ballotPapers: Ballot[];
+  candidates: Candidate[];
   voters: string[];
   votingTime: number;
   pollId: string;
@@ -10,15 +10,15 @@ type GeneralSettingHookProps = {
 };
 
 export default function useGeneralSetting(props: GeneralSettingHookProps) {
-  const { pollName, ballotPapers, voters, votingTime, pollId, invitationLink } =
+  const { pollName, candidates, voters, votingTime, pollId, invitationLink } =
     props;
 
   const [tableContentParams, setTableContentParams] = useState([
     { id: "pollName", title: "Poll Name", value: pollName, afterFix: "" },
     {
-      id: "ballotPapers",
-      title: "Ballots Paper",
-      value: ballotPapers,
+      id: "candidates",
+      title: "Number of Candidates",
+      value: candidates,
       afterFix: "",
     },
     { id: "voters", title: "Voters", value: voters, afterFix: "" },
@@ -53,7 +53,7 @@ export default function useGeneralSetting(props: GeneralSettingHookProps) {
 
     setTableContentParams(newTableContent);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pollName, ballotPapers, voters, votingTime, pollId, invitationLink]);
+  }, [pollName, candidates, voters, votingTime, pollId, invitationLink]);
 
   return { tableContentParams };
 }

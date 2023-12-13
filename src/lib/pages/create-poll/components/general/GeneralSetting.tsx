@@ -1,10 +1,10 @@
-import { Ballot } from "@/lib/package/entities/poll.entity";
+import { Candidate } from "@/lib/package/entities/poll.entity";
 import useGeneralSetting from "./GeneralSetting.hook";
 import "./style.css";
 
 type GeneralSettingProps = {
   pollName: string;
-  ballotPapers: Ballot[];
+  candidates: Candidate[];
   voters: string[];
   votingTime: number;
   pollId: string;
@@ -44,8 +44,8 @@ export default function GeneralSetting(props: GeneralSettingProps) {
                         {item.title}
                       </td>
                       <td style={{ width: "80%" }}>
-                        {item.id === "ballotPapers"
-                          ? (item.value as Ballot[]).length
+                        {item.id === "candidates"
+                          ? (item.value as Candidate[]).length
                           : item.id === "voters"
                           ? (item.value as string[]).length
                           : String(item.value)}
