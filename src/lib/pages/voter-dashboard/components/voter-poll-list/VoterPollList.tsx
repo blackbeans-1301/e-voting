@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import VoterPollCard from "./components/voter-poll-card/VoterPollCard";
 
 export default function VoterPollList() {
-  const [polls, setPolls] = useState<Poll[]>();
+  const [polls, setPolls] = useState<Poll[]>([]);
   const [loading, setLoading] = useState(false);
 
   const router = useRouter();
@@ -23,7 +23,6 @@ export default function VoterPollList() {
         await fetch(`/api/election/${voterInfo.voterId}`)
           .then((res) => res.json())
           .then((res) => {
-            console.log(res);
             setPolls(res);
             setLoading(false);
           });

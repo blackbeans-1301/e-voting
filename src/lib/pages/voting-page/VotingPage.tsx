@@ -10,12 +10,12 @@ type VotingPageProps = {
 
 export default function VotingPage(props: VotingPageProps) {
   const [loading, setLoading] = useState(false);
-  const [ pollInfo, setPollInfo] = useState<BallotInfo>();
+  const [pollInfo, setPollInfo] = useState<BallotInfo>();
   const router = useRouter();
 
   useEffect(() => {
-    getPollInfo()
-  }, [])
+    getPollInfo();
+  }, []);
 
   const getPollInfo = async () => {
     try {
@@ -38,22 +38,31 @@ export default function VotingPage(props: VotingPageProps) {
 
   return (
     <>
-      {loading ? <p>Loading...</p> :
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
         <div className="w-full h-full">
           <div className="w-full h-full pt-4">
             <div className="w-full text-3xl font-semibold text-gray-700 text-center pb-4">
               {pollInfo ? pollInfo.election.name : ""}
             </div>
 
-            {(pollInfo && pollInfo.election.isActived === true) && (
-              <UserVote pollId={pollInfo.election.id} ballots={pollInfo.candidates} />
+            {pollInfo && pollInfo.election.isActived === true && (
+              <UserVote
+                pollId={pollInfo.election.id}
+                candidates={pollInfo.candidates}
+                publicKey={pollInfo.serverPublicKey}
+              />
             )}
-            {(pollInfo && pollInfo.election.isActived === true) && (
-              <ViewPollResult pollId={pollInfo.election.id} pollName={pollInfo.election.name} />
+            {pollInfo && pollInfo.election.isActived === true && (
+              <ViewPollResult
+                pollId={pollInfo.election.id}
+                pollName={pollInfo.election.name}
+              />
             )}
           </div>
         </div>
-      }
+      )}
     </>
   );
 }

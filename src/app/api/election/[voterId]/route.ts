@@ -4,10 +4,7 @@ export const GET = async (
 ) => {
   const voterId = params.voterId;
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE}/voter/${voterId}/elections`,
-    {
-      method: "GET",
-    }
+    `${process.env.NEXT_PUBLIC_API_BASE}/voter/${voterId}/elections`
   );
   return res;
 };

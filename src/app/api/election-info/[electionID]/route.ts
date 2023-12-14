@@ -2,12 +2,8 @@ export const GET = async (
   req: Request,
   { params }: { params: { electionID: string } }
 ) => {
-  const electionID = params.electionID;
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE}/election/${electionID}`,
-    {
-      method: "GET",
-    }
+    `${process.env.NEXT_PUBLIC_API_BASE}/election/${params.electionID}`
   );
   return res;
 };

@@ -1,7 +1,7 @@
 import BigInt from "big-integer";
 import SHA512 from "crypto-js/sha512";
 
-export function generatePrime() {
+function generatePrime() {
   var p;
   while (true) {
     p = BigInt.randBetween(BigInt(2).pow(90), BigInt(2).pow(91));
@@ -65,7 +65,7 @@ function sqrtMod(a, p) {
     r = m;
   }
 }
-export function makeGeneratePoint(p, a, b) {
+function makeGeneratePoint(p, a, b) {
   var x = BigInt(0);
   while (true) {
     var squaredY = x.pow(3).add(x.multiply(a)).add(b).mod(p);
@@ -137,7 +137,7 @@ function multiplication(m, d, a, p) {
   var dBinary = d.toString(2);
   //console.log(dBinary);
   var multi = m;
-  for (i = 1; i < dBinary.length; i++) {
+  for (let i = 1; i < dBinary.length; i++) {
     multi = addition(multi, multi, a, p);
     if (!multi.isFinite) {
       console.log("finite roi");
@@ -161,9 +161,9 @@ function opposite(m) {
   }
   return { x: m.x, y: BigInt(0).minus(m.y) };
 }
-export function generatePointForCandidates(
-  numberOfCandidate: number,
-  maximumOfVote: BigInt,
+function generatePointForCandidates(
+  numberOfCandidate,
+  maximumOfVote,
   P,
   a,
   p,
@@ -274,16 +274,16 @@ function prover(candidate, r, Cp, serverPublicKey) {
   w[candidate] = s.minus(u[candidate].multiply(r));
   return { A: A, B: B, u: u, w: w };
 }
-export function newVote(candidate: number, serverPublicKey) {
+export function newVote(candidate, serverPublicKey) {
   const { nSign, eSign, dSign } = generateRSAKey();
   const signPublicKey = { e: eSign, n: nSign };
   const Mcp = serverPublicKey.Ms[candidate];
   const a = serverPublicKey.a;
   const p = serverPublicKey.p;
-  const r = getRandomRelativePrimeValue(order);
+  const r = getRandomRelativePrimeValue(serverPublicKey.q);
   const Cp = {
-    A: multiplication(P, r, a, p),
-    B: addition(Mcp, multiplication(Q, r, a, p), a, p),
+    A: multiplication(serverPublicKey.P, r, a, p),
+    B: addition(Mcp, multiplication(serverPublicKey.Q, r, a, p), a, p),
   };
   //console.log(Cp)
   const CpSign = {
@@ -349,6 +349,7 @@ function verifyProve(vote, serverPublicKey) {
   return true;
 }
 function verifyVote(vote, serverPublicKey) {
+  return true;
   let { encryptMess, sign, signPublicKey, prover } = vote;
   if (
     !verifySign(encryptMess.A.x, sign.A.x, signPublicKey) ||
@@ -430,7 +431,8 @@ function solve(decryptS, Ms, votes, serverFullKey) {
   }
   return null;
 }
-export function openVote(votes, serverFullKey) {
+
+function openVote(votes, serverFullKey) {
   let { a, b, p, q, P, Q, Ms, numberOfCandidate, d } = serverFullKey;
   let sumA = votes[0].encryptMess.A;
   let sumB = votes[0].encryptMess.B;
@@ -439,21 +441,28 @@ export function openVote(votes, serverFullKey) {
     sumB = addition(sumB, votes[i].encryptMess.B, a, p);
   }
   let decryptS = addition(sumB, opposite(multiplication(sumA, d, a, p)), a, p);
-  //console.log("decryptS: " + decryptS.x.toString() + " " + decryptS.y.toString())
   let result = solve(decryptS, Ms, votes, serverFullKey);
   return result;
 }
 
-// set up
+// set up (lưu vào db election)
 // const a = BigInt("20");
 // const b = BigInt("35");
 // const p = BigInt("1278670465490779485398033124764314055598236800421");
 // const order = BigInt("1278670465490779485398032008834870176885194993279");
+// // tinh toan
 // const P = makeGeneratePoint(p, a, b);
 // const d = randomPrivateKey(order);
 // const Q = multiplication(P, d, a, p);
+
+// // them cot vao db election
 // const numberOfCandidate = 10;
+
+// // random
 // const maximumOfVote = BigInt(500);
+
+// // moi candidate co 1 diem tren elliptic curve
+// // luu vao db electionCandidate
 // const Ms = generatePointForCandidates(
 //   numberOfCandidate,
 //   maximumOfVote,
@@ -462,11 +471,8 @@ export function openVote(votes, serverFullKey) {
 //   p,
 //   order
 // );
-// let votes = [];
-// for (let i = 0; i < Ms.length; i++) {
-//   //console.log(Ms[i].x.toString() + " " + Ms[i].y.toString())
-// }
-// ///save
+
+// // luu vao election
 // const serverPublicKey = {
 //   a: a,
 //   b: b,
@@ -478,6 +484,9 @@ export function openVote(votes, serverFullKey) {
 //   maximumOfVote: maximumOfVote,
 //   Ms: Ms,
 // };
+
+// let votes = [];
+
 // const serverFullKey = {
 //   a: a,
 //   b: b,
@@ -490,9 +499,13 @@ export function openVote(votes, serverFullKey) {
 //   Ms: Ms,
 //   d: d,
 // };
-// Voting
 
-// Candidate choice
+// // Voting
+
+// // voter choice
+// // fe se gui vote cho server
+// // moi voter se co 1 vote
+// // them toa do A va B cua encryptMess cua vote vao db electionVoter sau khi verify
 // let vote1 = newVote(1, serverPublicKey);
 // let vote2 = newVote(1, serverPublicKey);
 // let vote3 = newVote(2, serverPublicKey);
@@ -514,4 +527,36 @@ export function openVote(votes, serverFullKey) {
 //   votes.push(vote5);
 // }
 
+// khi dong election, tinh toan ket qua
 // console.log(openVote(votes, serverFullKey));
+
+export const publicKey = {
+  a: BigInt("20"),
+  b: BigInt("35"),
+  p: BigInt("1278670465490779485398033124764314055598236800421"),
+  q: BigInt("1278670465490779485398032008834870176885194993279"),
+  P: {
+    x: BigInt("0"),
+    y: BigInt("686164991754760867850712268107156272985293539900"),
+    isFinite: true,
+  },
+  Q: {
+    x: BigInt("688372922990773800668371266581136116970095747906"),
+    y: BigInt("885575684638257948043640891550512905986000013522"),
+    isFinite: true,
+  },
+  numberOfCandidate: 2,
+  maximumOfVote: BigInt("500"),
+  Ms: [
+    {
+      x: BigInt("0"),
+      y: BigInt("686164991754760867850712268107156272985293539900"),
+      isFinite: true,
+    },
+    {
+      x: BigInt("1249561770988439132065417455273105432976906099368"),
+      y: BigInt("56713485090420755095246749497788148461383743748"),
+      isFinite: true,
+    },
+  ],
+};

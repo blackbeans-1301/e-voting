@@ -6,26 +6,45 @@ import useUserVote from "./hooks/UserVote.hook";
 
 type UserVoteProps = {
   pollId: string;
-  ballots: Candidate[];
+  candidates: Candidate[];
+  publicKey: any;
 };
 
 export default function UserVote(props: UserVoteProps) {
-  const { pollId, ballots } = props;
-  const { selectedBallot, setSelectedBallot } = useUserVote();
+  const { pollId, candidates, publicKey } = props;
+  const { selectedCandidate, setSelectedCandidate } = useUserVote();
+
+  const handleVote = async () => {
+    try {
+      console.log(selectedCandidate);
+      await fetch(`/api/vote/${pollId}`, {
+        method: "POST",
+        body: JSON.stringify({
+          candidateNumber: selectedCandidate?.number,
+          publicKey,
+        }),
+      });
+      await toast.success("Submit successfully!");
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <div className="w-full h-full">
       <div className="px-8">
-        {ballots.map((ballot) => {
+        {candidates.map((candidate) => {
           return (
             <BallotItem
-              key={ballot.id}
-              ballot={ballot}
+              key={candidate.id}
+              candidate={candidate}
               isSelected={
-                selectedBallot ? selectedBallot.id === ballot.id : false
+                selectedCandidate
+                  ? selectedCandidate.id === candidate.id
+                  : false
               }
               onClick={() => {
-                setSelectedBallot(ballot);
+                setSelectedCandidate({ ...candidate });
               }}
             />
           );
@@ -37,17 +56,11 @@ export default function UserVote(props: UserVoteProps) {
           <div className="">
             Selected:{" "}
             <span className="text-xl text-gray-700 font-semibold">
-              {selectedBallot ? selectedBallot.name : ""}
+              {selectedCandidate ? selectedCandidate.name : ""}
             </span>
           </div>
         </div>
-        <AppButton
-          title="Submit"
-          handler={() => {
-            console.log("submit");
-            toast.success("Submit successfully!");
-          }}
-        />
+        <AppButton title="Submit" handler={handleVote} />
       </div>
     </div>
   );
