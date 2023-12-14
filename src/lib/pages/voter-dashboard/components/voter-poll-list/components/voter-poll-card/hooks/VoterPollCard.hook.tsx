@@ -9,11 +9,9 @@ type PollCardHookProps = {
 export default function useVoterPollCard({ poll }: PollCardHookProps) {
   const router = useRouter();
   const onButtonClicked = () => {
-    console.log("Button Clicked");
-    if(poll && poll.isActived === true && poll.isVoted === true) {
-      toast.error("Bạn đã vote cho cuộc bầu cử này!")
-    }
-    else router.push(`voting/${poll.id}`)
+    if (poll && poll.isActived === true && poll.isVoted === true) {
+      toast.error("Bạn đã vote cho cuộc bầu cử này!");
+    } else router.push(`voting/${poll.id}`);
   };
 
   return { onButtonClicked };

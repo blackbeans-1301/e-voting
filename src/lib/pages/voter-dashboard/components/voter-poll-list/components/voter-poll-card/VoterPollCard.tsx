@@ -9,7 +9,6 @@ type PollCardProps = {
 export default function VoterPollCard(props: PollCardProps) {
   const { poll } = props;
   const { onButtonClicked } = useVoterPollCard({ poll });
-  console.log("polls, ", poll)
 
   return (
     <div
@@ -28,8 +27,7 @@ export default function VoterPollCard(props: PollCardProps) {
               status:&nbsp;
               <span
                 className={`font-semibold border-2 ${
-                  poll.isActived &&
-                  poll.isActived
+                  poll.isActived && poll.isActived
                     ? "border-blue-600"
                     : "border-yellow-600"
                 } py-0.5 px-1 rounded-md`}
@@ -78,10 +76,7 @@ export default function VoterPollCard(props: PollCardProps) {
         <div className="h-18 ">
           <AppButton
             title={
-              poll.isActived &&
-              poll.isActived
-                ? "Start Vote"
-                : "View Results"
+              poll.isActived && poll.isActived ? "Start Vote" : "View Results"
             }
             handler={onButtonClicked}
           />
