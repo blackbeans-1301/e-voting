@@ -1,12 +1,12 @@
-import { BallotWithResult } from "@/lib/package/entities/poll.entity";
+import { CandidateWithResult } from "@/lib/package/entities/poll.entity";
 import { useEffect, useState } from "react";
 
-export default function useViewPollResult(pollResult: BallotWithResult[]) {
+export default function useViewPollResult(pollResult: CandidateWithResult[]) {
   const [chartData, setChartData] = useState({});
 
   useEffect(() => {
     const labels = pollResult.map((ballot) => ballot.name);
-    const data = pollResult.map((ballot) => ballot.numberOfVotes);
+    const data = pollResult.map((ballot) => ballot.numberOfVote);
 
     setChartData({
       labels,
