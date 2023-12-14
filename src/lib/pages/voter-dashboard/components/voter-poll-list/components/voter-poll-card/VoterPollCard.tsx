@@ -63,12 +63,12 @@ export default function VoterPollCard(props: PollCardProps) {
                 </span>
               </div>
 
-              <div className="mt-2">
+              {/* <div className="mt-2">
                 <span className="font-semibold">Created At:&nbsp;</span>
                 <span className="">
                   {new Date(poll.createdAt).toLocaleString()}
                 </span>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
