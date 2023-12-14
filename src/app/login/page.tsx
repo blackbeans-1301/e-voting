@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -25,9 +26,14 @@ export default function Login() {
         }),
       });
 
-      const data: { voterId: number; name: string } = await res.json();
-      localStorage.setItem("voter", JSON.stringify(data));
-      router.push("/voter-dashboard");
+      const data: { voterId: number; name: string, message: string } = await res.json();
+      console.log(data)
+      if(data.message) {
+        toast.error("Sai email/mật khẩu")
+      } else {
+        localStorage.setItem("voter", JSON.stringify(data));
+        router.push("/voter-dashboard");
+      }
     } catch (err) {
       console.log(err);
     }
