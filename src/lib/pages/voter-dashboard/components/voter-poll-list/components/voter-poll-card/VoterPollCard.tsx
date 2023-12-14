@@ -63,6 +63,13 @@ export default function VoterPollCard(props: PollCardProps) {
                 </span>
               </div>
 
+              <div className="mt-1">
+                <span className="font-semibold">Candidates:&nbsp;</span>
+                <span className="">
+                  {poll.numberOfCandidate && poll.numberOfCandidate}
+                </span>
+              </div>
+
               {/* <div className="mt-2">
                 <span className="font-semibold">Created At:&nbsp;</span>
                 <span className="">

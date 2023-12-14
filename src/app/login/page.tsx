@@ -26,10 +26,11 @@ export default function Login() {
         }),
       });
 
-      const data: { voterId: number; name: string, message: string } = await res.json();
-      console.log(data)
-      if(data.message) {
-        toast.error("Sai email/mật khẩu")
+      const data: { voterId: number; name: string; message: string } =
+        await res.json();
+      console.log(data);
+      if (data.message) {
+        toast.error("Sai email/mật khẩu");
       } else {
         localStorage.setItem("voter", JSON.stringify(data));
         router.push("/voter-dashboard");
@@ -75,11 +76,6 @@ export default function Login() {
           >
             Login
           </button>
-          <div className="mt-4 float-right">
-            <Link href="/sign-up">
-              <p>Sign up?</p>
-            </Link>
-          </div>
         </form>
       </div>
     </div>

@@ -27,8 +27,7 @@ export default function AdminPollCard(props: PollCardProps) {
               status:&nbsp;
               <span
                 className={`font-semibold border-2 ${
-                  poll.isActived &&
-                  poll.isActived
+                  poll.isActived && poll.isActived
                     ? "border-blue-600"
                     : "border-yellow-600"
                 } py-0.5 px-1 rounded-md`}
@@ -64,10 +63,10 @@ export default function AdminPollCard(props: PollCardProps) {
                 </span>
               </div>
 
-              <div className="mt-2">
-                <span className="font-semibold">Created At:&nbsp;</span>
+              <div className="mt-1">
+                <span className="font-semibold">Candidates:&nbsp;</span>
                 <span className="">
-                  {new Date(poll.createdAt).toLocaleString()}
+                  {poll.numberOfCandidate && poll.numberOfCandidate}
                 </span>
               </div>
             </div>
@@ -77,10 +76,7 @@ export default function AdminPollCard(props: PollCardProps) {
         <div className="h-18 ">
           <AppButton
             title={
-              poll.isActived &&
-              poll.isActived
-                ? "Close vote"
-                : "View Results"
+              poll.isActived && poll.isActived ? "Close vote" : "View Results"
             }
             handler={onButtonClicked}
           />
