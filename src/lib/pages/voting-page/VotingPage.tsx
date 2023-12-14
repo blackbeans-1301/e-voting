@@ -10,12 +10,12 @@ type VotingPageProps = {
 
 export default function VotingPage(props: VotingPageProps) {
   const [loading, setLoading] = useState(false);
-  const [ pollInfo, setPollInfo] = useState<BallotInfo>();
+  const [pollInfo, setPollInfo] = useState<BallotInfo>();
   const router = useRouter();
 
   useEffect(() => {
-    getPollInfo()
-  }, [])
+    getPollInfo();
+  }, []);
 
   const getPollInfo = async () => {
     try {
@@ -23,13 +23,11 @@ export default function VotingPage(props: VotingPageProps) {
       const voter = localStorage.getItem("voter");
       if (!voter) router.push("/login");
       else {
-        await fetch(`/api/election-info/${props.pollId}`)
-          .then((res) => res.json())
-          .then((res) => {
-            console.log(res);
-            setPollInfo(res);
-            setLoading(false);
-          });
+        const res = await fetch(`/api/election-info/${props.pollId}`);
+        console.log(res);
+        const data = await res.json();
+        setPollInfo(data);
+        setLoading(false);
       }
     } catch (err) {
       console.log(err);
@@ -38,7 +36,9 @@ export default function VotingPage(props: VotingPageProps) {
 
   return (
     <>
-      {loading ? <p>Loading...</p> :
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
         <div className="w-full h-full">
           <div className="w-full h-full pt-4">
             <div className="w-full text-3xl font-semibold text-gray-700 text-center pb-4">
@@ -48,14 +48,17 @@ export default function VotingPage(props: VotingPageProps) {
               <p>Bạn đã vote cho cuộc bầu cử này!</p>
             )}
             {(pollInfo && pollInfo.election.isActived === true) && (
-              <UserVote pollId={pollInfo.election.id} ballots={pollInfo.candidates} />
+              <UserVote pollId={pollInfo.election.id} candidates={pollInfo.candidates} />
             )}
-            {(pollInfo && pollInfo.election.isActived === true) && (
-              <ViewPollResult pollId={pollInfo.election.id} pollName={pollInfo.election.name} />
+            {pollInfo && pollInfo.election.isActived === true && (
+              <ViewPollResult
+                pollId={pollInfo.election.id}
+                pollName={pollInfo.election.name}
+              />
             )}
           </div>
         </div>
-      }
+      )}
     </>
   );
 }

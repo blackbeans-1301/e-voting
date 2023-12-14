@@ -1,14 +1,14 @@
-import { Ballot } from "@/lib/package/entities/poll.entity";
+import { Candidate } from "@/lib/package/entities/poll.entity";
 import { CheckCircleOutline, NotInterested } from "@mui/icons-material";
 
 type BallotItemProps = {
-  ballot: Ballot;
+  candidate: Candidate;
   isSelected: boolean;
   onClick: () => void;
 };
 
 export default function BallotItem(props: BallotItemProps) {
-  const { ballot, isSelected, onClick } = props;
+  const { candidate, isSelected, onClick } = props;
 
   return (
     <div
@@ -16,7 +16,7 @@ export default function BallotItem(props: BallotItemProps) {
     drop-shadow-md hover:drop-shadow-xl scale-95 hover:scale-100 ease-in duration-100 "
       onClick={onClick}
     >
-      <div className="text-lg text-gray-700">{ballot.name}</div>
+      <div className="text-lg text-gray-700">{candidate.name}</div>
       <div className="">
         {isSelected ? (
           <CheckCircleOutline sx={{ color: "green" }} />

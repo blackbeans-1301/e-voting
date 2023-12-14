@@ -26,7 +26,8 @@ export interface Election {
 export interface Candidate {
   id: string;
   name: string;
-  electionID?: any
+  electionID?: any;
+  number?: number;
 }
 
 export interface CandidateWithResult extends Candidate {
@@ -34,12 +35,12 @@ export interface CandidateWithResult extends Candidate {
 }
 
 export interface BallotFullResult {
-  election?: Election
-  candidates: CandidateWithResult[]
+  election?: Election;
+  candidates: CandidateWithResult[];
 }
 
 export interface BallotInfo {
-  election: Election
-  serverPublicKey?: any
-  candidates: Candidate[]
+  election: Election;
+  serverPublicKey?: any;
+  candidates: Candidate[];
 }
