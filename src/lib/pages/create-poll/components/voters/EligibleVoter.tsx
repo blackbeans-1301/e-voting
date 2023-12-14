@@ -15,7 +15,7 @@ export default function EligibleVoters(props: EligibleVotersProps) {
     setVoters,
   });
   const [voterInput, setVoterInput] = useState("");
-  const inputRef = useRef<HTMLElement>();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   return (
     <div
@@ -67,7 +67,7 @@ export default function EligibleVoters(props: EligibleVotersProps) {
 
               <button
                 onClick={() => {
-                  if (inputRef.current.checkValidity()) {
+                  if (inputRef.current?.checkValidity()) {
                     addEligibleVoter(voterInput);
                     setVoterInput("");
                   }

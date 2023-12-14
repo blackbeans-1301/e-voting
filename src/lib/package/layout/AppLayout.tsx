@@ -130,14 +130,14 @@ export default function AppLayout(props: AppLayoutProps) {
                     aria-orientation="vertical"
                     aria-labelledby="user-menu-button"
                   >
-                    <a
+                    {/* <a
                       href="#"
                       className="block px-4 py-2 text-sm text-gray-700"
                       role="menuitem"
                       id="user-menu-item-0"
                     >
                       Your Profile
-                    </a>
+                    </a> */}
                     <a
                       href="#"
                       className="block px-4 py-2 text-sm text-gray-700"
@@ -154,7 +154,7 @@ export default function AppLayout(props: AppLayoutProps) {
           </div>
         </div>
 
-        <div className="sm:hidden" id="mobile-menu">
+        {/* <div className="sm:hidden" id="mobile-menu">
           <div className="space-y-1 px-2 pb-3 pt-2">
             <a
               href="#"
@@ -182,7 +182,7 @@ export default function AppLayout(props: AppLayoutProps) {
               Calendar
             </a>
           </div>
-        </div>
+        </div> */}
       </div>
 
       {children}

@@ -10,12 +10,12 @@ function generatePrime() {
     }
   }
 }
-function legendreSymbol(a, p) {
+function legendreSymbol(a: any, p: any) {
   const ls = a.modPow(p.minus(1).divide(2), p);
   if (ls.equals(p.subtract(1))) return BigInt(-1);
   return ls;
 }
-function sqrtMod(a, p) {
+function sqrtMod(a: any, p: any) {
   // Tonelli–Shanks algorithm
   if (!legendreSymbol(a, p).eq(1)) {
     return BigInt(0);
@@ -65,7 +65,7 @@ function sqrtMod(a, p) {
     r = m;
   }
 }
-function makeGeneratePoint(p, a, b) {
+function makeGeneratePoint(p: any, a: any, b: any) {
   var x = BigInt(0);
   while (true) {
     var squaredY = x.pow(3).add(x.multiply(a)).add(b).mod(p);
@@ -75,7 +75,7 @@ function makeGeneratePoint(p, a, b) {
     x = x.add(1);
   }
 }
-function isOnCurve(m, a, b, p) {
+function isOnCurve(m: any, a: any, b: any, p: any) {
   let x = m.x;
   let y = m.y;
   var result = y
@@ -84,7 +84,7 @@ function isOnCurve(m, a, b, p) {
     .mod(p);
   return result;
 }
-function addition(m, n, a, p) {
+function addition(m: any, n: any, a: any, p: any) {
   if (m.isFinite !== undefined && m.isFinite === false) {
     return n;
   }
@@ -130,7 +130,7 @@ function addition(m, n, a, p) {
   //console.log("x3: " + x3.toString() + ", y3: " + y3.toString())
   return { x: x3, y: y3, isFinite: true };
 }
-function multiplication(m, d, a, p) {
+function multiplication(m: any, d: any, a: any, p: any) {
   if (d.eq(0)) {
     return { x: BigInt(0), y: BigInt(0), isFinite: false };
   }
@@ -155,19 +155,19 @@ function multiplication(m, d, a, p) {
 
   return { x: multi.x, y: multi.y, isFinite: true };
 }
-function opposite(m) {
+function opposite(m: any) {
   if (m.isFinite !== undefined && m.isFinite === false) {
     return m;
   }
   return { x: m.x, y: BigInt(0).minus(m.y) };
 }
 function generatePointForCandidates(
-  numberOfCandidate,
-  maximumOfVote,
-  P,
-  a,
-  p,
-  order
+  numberOfCandidate: any,
+  maximumOfVote: any,
+  P: any,
+  a: any,
+  p: any,
+  order: any
 ) {
   let Ms = [];
   for (let i = 0; i < numberOfCandidate; i++) {
@@ -179,10 +179,10 @@ function generatePointForCandidates(
   }
   return Ms;
 }
-function randomPrivateKey(order) {
+function randomPrivateKey(order: any) {
   return BigInt.randBetween(BigInt(1), order);
 }
-function getRandomRelativePrimeValue(q) {
+function getRandomRelativePrimeValue(q: any) {
   while (true) {
     let rand = BigInt.randBetween(BigInt(1), BigInt(999));
     if (BigInt.gcd(rand, q).eq(1)) {
@@ -190,7 +190,7 @@ function getRandomRelativePrimeValue(q) {
     }
   }
 }
-function getRandomRelativePrimeValueForS(q) {
+function getRandomRelativePrimeValueForS(q: any) {
   while (true) {
     let rand = BigInt.randBetween(BigInt(1), q.minus(1));
     if (BigInt.gcd(rand, q).eq(1)) {
@@ -211,16 +211,16 @@ function generateRSAKey() {
     }
   }
 }
-function signed(x, d, n) {
+function signed(x: any, d: any, n: any) {
   return x.modPow(d, n);
 }
-function hash(A, B, p) {
+function hash(A: any, B: any, p: any) {
   let newArr = A.concat(B);
   const hash = SHA512(JSON.stringify(newArr));
-  let hashInt = BigInt(hash, 16);
+  let hashInt = BigInt(hash.toString(), 16);
   return hashInt.mod(BigInt(2).pow(50));
 }
-function prover(candidate, r, Cp, serverPublicKey) {
+function prover(candidate: any, r: any, Cp: any, serverPublicKey: any) {
   let Ap = Cp.A;
   let Bp = Cp.B;
   let { a, b, p, q, P, Q, Ms } = serverPublicKey;
@@ -274,7 +274,7 @@ function prover(candidate, r, Cp, serverPublicKey) {
   w[candidate] = s.minus(u[candidate].multiply(r));
   return { A: A, B: B, u: u, w: w };
 }
-export function newVote(candidate, serverPublicKey) {
+export function newVote(candidate: any, serverPublicKey: any) {
   const { nSign, eSign, dSign } = generateRSAKey();
   const signPublicKey = { e: eSign.toString(), n: nSign.toString() };
   const Mcp = serverPublicKey.Ms[candidate];
@@ -329,12 +329,12 @@ export function newVote(candidate, serverPublicKey) {
   };
 }
 
-function verifySign(encryptMess, sign, signPublicKey) {
+function verifySign(encryptMess: any, sign: any, signPublicKey: any) {
   let { e, n } = signPublicKey;
   return sign.modPow(e, n).eq(encryptMess);
 }
 
-function verifyProve(vote, serverPublicKey) {
+function verifyProve(vote: any, serverPublicKey: any) {
   let { encryptMess, sign, signPublicKey, prover } = vote;
   let { a, b, p, q, P, Q, Ms, numberOfCandidate } = serverPublicKey;
   let { A, B, u, w } = prover;
@@ -378,7 +378,7 @@ function verifyProve(vote, serverPublicKey) {
   }
   return true;
 }
-function verifyVote(vote, serverPublicKey) {
+function verifyVote(vote: any, serverPublicKey: any) {
   return true;
   let { encryptMess, sign, signPublicKey, prover } = vote;
   if (
@@ -396,7 +396,7 @@ function verifyVote(vote, serverPublicKey) {
   }
   return true;
 }
-function generateTuple(sum, n) {
+function generateTuple(sum: any, n: any): any {
   if (n === 1) {
     return Array.from({ length: sum + 1 }, (_, i) => [i]);
   }
@@ -410,70 +410,70 @@ function generateTuple(sum, n) {
   }
   return ans;
 }
-function solve(decryptS, Ms, votes, serverFullKey) {
-  let { a, b, p, q, P, Q, numberOfCandidate } = serverFullKey;
-  let n = votes.length;
-  let mid = Ms.length / 2;
-  let left = generateTuple(n, mid);
-  let right = generateTuple(n, Ms.length - mid);
-  let data = [];
-  for (let i = 0; i <= n; i++) {
-    data.push(new Map());
-  }
-  for (let tuple of left) {
-    let curSum = 0;
-    let pt = { x: BigInt(0), y: BigInt(0), isFinite: false };
-    for (let i = 0; i < tuple.length; i++) {
-      curSum += tuple[i];
-      if (tuple[i] !== 0) {
-        pt = addition(pt, multiplication(Ms[i], BigInt(tuple[i]), a, p), a, p);
-      }
-    }
-    data[curSum].set(pt, tuple);
-  }
+// function solve(decryptS:any, Ms:any, votes:any, serverFullKey:any) {
+//   let { a, b, p, q, P, Q, numberOfCandidate } = serverFullKey;
+//   let n = votes.length;
+//   let mid = Ms.length / 2;
+//   let left = generateTuple(n, mid);
+//   let right = generateTuple(n, Ms.length - mid);
+//   let data = [];
+//   for (let i = 0; i <= n; i++) {
+//     data.push(new Map());
+//   }
+//   for (let tuple of left) {
+//     let curSum = 0;
+//     let pt = { x: BigInt(0), y: BigInt(0), isFinite: false };
+//     for (let i = 0; i < tuple.length; i++) {
+//       curSum += tuple[i];
+//       if (tuple[i] !== 0) {
+//         pt = addition(pt, multiplication(Ms[i], BigInt(tuple[i]), a, p), a, p);
+//       }
+//     }
+//     data[curSum].set(pt, tuple);
+//   }
 
-  //console.log(data)
-  for (let tuple of right) {
-    let curSum = 0;
-    let pt = { x: BigInt(0), y: BigInt(0), isFinite: false };
-    for (let i = 0; i < tuple.length; i++) {
-      curSum += tuple[i];
-      if (tuple[i] !== 0) {
-        pt = addition(
-          pt,
-          multiplication(Ms[i + mid], BigInt(tuple[i]), a, p),
-          a,
-          p
-        );
-      }
-    }
-    let target = addition(decryptS, opposite(pt), a, p);
-    //console.log(target.x.toString() + " : " + target.y.toString())
-    //console.log("target: " + target.x.toString() + " " + target.y.toString())
-    //console.log(n - curSum)
-    //console.log(curSum);
-    for (const key of data[n - curSum].keys()) {
-      //console.log("key: " + key.x.toString() + " " + key.y.toString())
-      if (target.x.eq(key.x) && target.y.eq(key.y)) {
-        return data[n - curSum].get(key).concat(tuple);
-      }
-    }
-  }
-  return null;
-}
+//   //console.log(data)
+//   for (let tuple of right) {
+//     let curSum = 0;
+//     let pt = { x: BigInt(0), y: BigInt(0), isFinite: false };
+//     for (let i = 0; i < tuple.length; i++) {
+//       curSum += tuple[i];
+//       if (tuple[i] !== 0) {
+//         pt = addition(
+//           pt,
+//           multiplication(Ms[i + mid], BigInt(tuple[i]), a, p),
+//           a,
+//           p
+//         );
+//       }
+//     }
+//     let target = addition(decryptS, opposite(pt), a, p);
+//     //console.log(target.x.toString() + " : " + target.y.toString())
+//     //console.log("target: " + target.x.toString() + " " + target.y.toString())
+//     //console.log(n - curSum)
+//     //console.log(curSum);
+//     for (const key of data[n - curSum].keys()) {
+//       //console.log("key: " + key.x.toString() + " " + key.y.toString())
+//       if (target.x.eq(key.x) && target.y.eq(key.y)) {
+//         return data[n - curSum].get(key).concat(tuple);
+//       }
+//     }
+//   }
+//   return null;
+// }
 
-function openVote(votes, serverFullKey) {
-  let { a, b, p, q, P, Q, Ms, numberOfCandidate, d } = serverFullKey;
-  let sumA = votes[0].encryptMess.A;
-  let sumB = votes[0].encryptMess.B;
-  for (let i = 1; i < votes.length; i++) {
-    sumA = addition(sumA, votes[i].encryptMess.A, a, p);
-    sumB = addition(sumB, votes[i].encryptMess.B, a, p);
-  }
-  let decryptS = addition(sumB, opposite(multiplication(sumA, d, a, p)), a, p);
-  let result = solve(decryptS, Ms, votes, serverFullKey);
-  return result;
-}
+// function openVote(votes, serverFullKey) {
+//   let { a, b, p, q, P, Q, Ms, numberOfCandidate, d } = serverFullKey;
+//   let sumA = votes[0].encryptMess.A;
+//   let sumB = votes[0].encryptMess.B;
+//   for (let i = 1; i < votes.length; i++) {
+//     sumA = addition(sumA, votes[i].encryptMess.A, a, p);
+//     sumB = addition(sumB, votes[i].encryptMess.B, a, p);
+//   }
+//   let decryptS = addition(sumB, opposite(multiplication(sumA, d, a, p)), a, p);
+//   let result = solve(decryptS, Ms, votes, serverFullKey);
+//   return result;
+// }
 
 // set up (lưu vào db election)
 // const a = BigInt("20");
