@@ -1,5 +1,6 @@
 import { Candidate } from "@/lib/package/entities/poll.entity";
 import AppButton from "@/lib/package/global-components/AppButton";
+import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import BallotItem from "./components/ballot-item/BallotItem";
 import useUserVote from "./hooks/UserVote.hook";
@@ -13,6 +14,7 @@ type UserVoteProps = {
 export default function UserVote(props: UserVoteProps) {
   const { pollId, candidates, publicKey } = props;
   const { selectedCandidate, setSelectedCandidate } = useUserVote();
+  const router = useRouter();
 
   const handleVote = async () => {
     try {
@@ -25,6 +27,7 @@ export default function UserVote(props: UserVoteProps) {
         }),
       });
       await toast.success("Submit successfully!");
+      router.push("/voter-dashboard");
     } catch (err) {
       console.log(err);
     }
@@ -44,7 +47,7 @@ export default function UserVote(props: UserVoteProps) {
                   : false
               }
               onClick={() => {
-                setSelectedCandidate({ ...candidate });
+                setSelectedCandidate(candidate);
               }}
             />
           );

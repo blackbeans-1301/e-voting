@@ -23,13 +23,11 @@ export default function VotingPage(props: VotingPageProps) {
       const voter = localStorage.getItem("voter");
       if (!voter) router.push("/login");
       else {
-        await fetch(`/api/election-info/${props.pollId}`)
-          .then((res) => res.json())
-          .then((res) => {
-            console.log(res);
-            setPollInfo(res);
-            setLoading(false);
-          });
+        const res = await fetch(`/api/election-info/${props.pollId}`);
+        console.log(res);
+        const data = await res.json();
+        setPollInfo(data);
+        setLoading(false);
       }
     } catch (err) {
       console.log(err);

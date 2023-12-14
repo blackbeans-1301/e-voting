@@ -1,12 +1,13 @@
 import { newVote } from "@/lib/common/ecc";
 import BigInt from "big-integer";
 
+import { cookies } from "next/headers";
+
 export const POST = async (
   req: Request,
   { params }: { params: { electionId: string } }
 ) => {
   const { candidateNumber, publicKey } = await req.json();
-  console.log("Candidate number is", candidateNumber);
 
   const convertedPublicKey = {
     a: BigInt(publicKey.a),
@@ -35,13 +36,13 @@ export const POST = async (
   };
 
   const createdVote = newVote(candidateNumber, convertedPublicKey);
-  console.log(createdVote);
 
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE}/voter/vote/${params.electionId}`,
     {
       method: "POST",
       headers: {
+        Cookie: cookies().toString(),
         Accept: "application/json",
         "Content-Type": "application/json",
       },

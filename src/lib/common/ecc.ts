@@ -276,7 +276,7 @@ function prover(candidate, r, Cp, serverPublicKey) {
 }
 export function newVote(candidate, serverPublicKey) {
   const { nSign, eSign, dSign } = generateRSAKey();
-  const signPublicKey = { e: eSign, n: nSign };
+  const signPublicKey = { e: eSign.toString(), n: nSign.toString() };
   const Mcp = serverPublicKey.Ms[candidate];
   const a = serverPublicKey.a;
   const p = serverPublicKey.p;
@@ -287,15 +287,45 @@ export function newVote(candidate, serverPublicKey) {
   };
   //console.log(Cp)
   const CpSign = {
-    A: { x: signed(Cp.A.x, dSign, nSign), y: signed(Cp.A.y, dSign, nSign) },
-    B: { x: signed(Cp.B.x, dSign, nSign), y: signed(Cp.B.y, dSign, nSign) },
+    A: {
+      x: signed(Cp.A.x, dSign, nSign).toString(),
+      y: signed(Cp.A.y, dSign, nSign).toString(),
+    },
+    B: {
+      x: signed(Cp.B.x, dSign, nSign).toString(),
+      y: signed(Cp.B.y, dSign, nSign).toString(),
+    },
   };
   const prove = prover(candidate, r, Cp, serverPublicKey);
   return {
-    encryptMess: Cp,
+    encryptMess: {
+      A: {
+        x: Cp.A.x.toString(),
+        y: Cp.A.y.toString(),
+        isFinite: Cp.A.isFinite,
+      },
+      B: {
+        x: Cp.B.x.toString(),
+        y: Cp.B.y.toString(),
+        isFinite: Cp.B.isFinite,
+      },
+    },
     sign: CpSign,
     signPublicKey: signPublicKey,
-    prover: prove,
+    prover: {
+      A: prove.A.map((item) => ({
+        x: item.x.toString(),
+        y: item.y.toString(),
+        isFinite: item.isFinite,
+      })),
+      B: prove.B.map((item) => ({
+        x: item.x.toString(),
+        y: item.y.toString(),
+        isFinite: item.isFinite,
+      })),
+      u: prove.u.map((item) => item.toString()),
+      w: prove.w.map((item) => item.toString()),
+    },
   };
 }
 
