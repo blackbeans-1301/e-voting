@@ -1,3 +1,5 @@
+export const fetchCache = "force-no-store";
+
 export const GET = async (
   req: Request,
   { params }: { params: { electionID: string } }
