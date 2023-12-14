@@ -9,6 +9,7 @@ export interface Poll {
   startDate?: Date;
   endDate?: Date;
   isActived?: boolean;
+  isVoted: boolean
 }
 
 export interface Election {
@@ -19,6 +20,7 @@ export interface Election {
   isActived: boolean;
   numberOfCandidate: number;
   maximumOfVote: any;
+  isVoted: boolean
 }
 
 export interface Candidate {

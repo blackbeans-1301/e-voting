@@ -79,7 +79,7 @@ export default function AdminPollCard(props: PollCardProps) {
             title={
               poll.isActived &&
               poll.isActived
-                ? "Start Vote"
+                ? "Close vote"
                 : "View Results"
             }
             handler={onButtonClicked}
