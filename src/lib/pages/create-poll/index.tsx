@@ -31,7 +31,7 @@ export default function CreatePollPage() {
   const router = useRouter();
 
   const createElectionHandler = async () => {
-    if (!pollName || !candidates.length || !voters.length) return;
+    if (!pollName || !candidates.length) return;
 
     const date = new Date();
     const endDate = new Date(date.getTime() + 30 * 60 * 1000);
