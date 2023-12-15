@@ -7,8 +7,6 @@ type GeneralSettingProps = {
   candidates: Candidate[];
   voters: string[];
   votingTime: number;
-  pollId: string;
-  invitationLink: string;
   value: number;
   index: number;
 };

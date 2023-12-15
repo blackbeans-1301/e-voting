@@ -15,17 +15,14 @@ export default function CreatePollPage() {
   const {
     tabIndex,
     pollName,
-    pollId,
     candidates,
     voters,
     votingTime,
-    invitationLink,
     setCandidates,
     setPollName,
     setTabIndex,
     setVoters,
     setVotingTime,
-    setInvitationLink,
   } = useCreatePollPage();
 
   const router = useRouter();
@@ -104,8 +101,6 @@ export default function CreatePollPage() {
             candidates={candidates}
             voters={voters}
             votingTime={30}
-            pollId={pollId}
-            invitationLink={"https://google.com"}
           />
           <Candidates
             value={tabIndex}

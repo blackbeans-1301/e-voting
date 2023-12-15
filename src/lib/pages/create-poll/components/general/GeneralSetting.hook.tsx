@@ -5,13 +5,10 @@ type GeneralSettingHookProps = {
   candidates: Candidate[];
   voters: string[];
   votingTime: number;
-  pollId: string;
-  invitationLink: string;
 };
 
 export default function useGeneralSetting(props: GeneralSettingHookProps) {
-  const { pollName, candidates, voters, votingTime, pollId, invitationLink } =
-    props;
+  const { pollName, candidates, voters, votingTime } = props;
 
   const [tableContentParams, setTableContentParams] = useState([
     { id: "pollName", title: "Poll Name", value: pollName, afterFix: "" },
@@ -27,13 +24,6 @@ export default function useGeneralSetting(props: GeneralSettingHookProps) {
       title: "Voting Time",
       value: votingTime,
       afterFix: "minutes",
-    },
-    { id: "pollId", title: "Poll ID", value: pollId, afterFix: "" },
-    {
-      id: "invitationLink",
-      title: "Invitation Link",
-      value: invitationLink,
-      afterFix: "",
     },
   ]);
 
@@ -53,7 +43,7 @@ export default function useGeneralSetting(props: GeneralSettingHookProps) {
 
     setTableContentParams(newTableContent);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pollName, candidates, voters, votingTime, pollId, invitationLink]);
+  }, [pollName, candidates, voters, votingTime]);
 
   return { tableContentParams };
 }
