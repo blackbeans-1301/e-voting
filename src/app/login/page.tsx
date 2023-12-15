@@ -1,8 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 export default function Login() {
@@ -16,7 +15,8 @@ export default function Login() {
     }
   }, []);
 
-  const handleLogin = async () => {
+  const handleLogin = async (e: FormEvent) => {
+    e.preventDefault();
     try {
       const res = await fetch("/api/login", {
         method: "POST",
@@ -44,7 +44,7 @@ export default function Login() {
     <div className="flex items-center justify-center h-screen">
       <div className="w-96 p-8 bg-white shadow-md rounded-md">
         <h1 className="text-2xl font-bold mb-4">Login</h1>
-        <form>
+        <form onSubmit={handleLogin}>
           <div className="mb-4">
             <label htmlFor="email" className="block text-gray-600">
               Email
@@ -70,9 +70,8 @@ export default function Login() {
             />
           </div>
           <button
-            type="button"
+            type="submit"
             className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600"
-            onClick={handleLogin}
           >
             Login
           </button>
